@@ -303,7 +303,7 @@
 }
 
 @utility pattern {
-  @apply bg-[url('/pattern.png')] bg-top bg-no-repeat;
+  @apply bg-[url('/pattern.png')] bg-top bg-repeat;
 }
 
 @utility blue-gradient-dark {
@@ -331,4 +331,36 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes float-slow {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@utility animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@utility animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
 }
