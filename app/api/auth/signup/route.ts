@@ -42,34 +42,35 @@ export async function POST(request: NextRequest) {
       },
       token,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error creating user:", error);
 
     // Handle Firebase Auth specific errors
-    if (error.code === "auth/email-already-exists") {
-      return NextResponse.json(
-        { error: "Email already in use" },
-        { status: 400 }
-      );
+    if (error && typeof error === "object" && "code" in error) {
+      if (error.code === "auth/email-already-exists") {
+        return NextResponse.json(
+          { error: "Email already in use" },
+          { status: 400 }
+        );
+      }
+
+      if (error.code === "auth/invalid-email") {
+        return NextResponse.json(
+          { error: "Invalid email format" },
+          { status: 400 }
+        );
+      }
+
+      if (error.code === "auth/weak-password") {
+        return NextResponse.json(
+          { error: "Password is too weak" },
+          { status: 400 }
+        );
+      }
     }
 
-    if (error.code === "auth/invalid-email") {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 }
-      );
-    }
-
-    if (error.code === "auth/weak-password") {
-      return NextResponse.json(
-        { error: "Password is too weak" },
-        { status: 400 }
-      );
-    }
-
-    return NextResponse.json(
-      { error: error.message || "Failed to create user" },
-      { status: 500 }
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to create user";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

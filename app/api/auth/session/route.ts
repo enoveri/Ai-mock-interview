@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Verify the ID token
-    const decodedToken = await auth.verifyIdToken(idToken);
+    await auth.verifyIdToken(idToken);
 
     // Create a session cookie (expires in 5 days)
     const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days in milliseconds
@@ -35,21 +35,22 @@ export async function POST(request: NextRequest) {
     });
 
     return NextResponse.json({ success: true });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Session creation error:", error);
 
-    if (error.code === "auth/id-token-expired") {
-      return NextResponse.json({ error: "Token expired" }, { status: 401 });
+    if (error && typeof error === "object" && "code" in error) {
+      if (error.code === "auth/id-token-expired") {
+        return NextResponse.json({ error: "Token expired" }, { status: 401 });
+      }
+
+      if (error.code === "auth/id-token-revoked") {
+        return NextResponse.json({ error: "Token revoked" }, { status: 401 });
+      }
     }
 
-    if (error.code === "auth/id-token-revoked") {
-      return NextResponse.json({ error: "Token revoked" }, { status: 401 });
-    }
-
-    return NextResponse.json(
-      { error: error.message || "Failed to create session" },
-      { status: 500 }
-    );
+    const errorMessage =
+      error instanceof Error ? error.message : "Failed to create session";
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }
 

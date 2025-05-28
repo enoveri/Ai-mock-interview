@@ -101,9 +101,11 @@ export default function SigninPage() {
 
       // Redirect to homepage
       window.location.href = "/";
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Signin error:", error);
-      toast.error(error.message || "Failed to sign in");
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign in";
+      toast.error(errorMessage);
     }
   }
 

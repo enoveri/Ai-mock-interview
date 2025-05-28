@@ -3,7 +3,6 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import dayjs from "dayjs";
 import { dummyInterviews } from "@/constants";
 import { Button } from "@/components/ui/button";
 import InterviewCard from "@/components/interview-card";

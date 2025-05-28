@@ -71,7 +71,7 @@ export default function SignupPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // We don't need to send confirmPassword to the API
-      const { confirmPassword, ...signupData } = values;
+      const { confirmPassword: _, ...signupData } = values;
 
       // Call the server-side API to register the user
       const response = await fetch("/api/auth/signup", {
@@ -125,9 +125,11 @@ export default function SignupPage() {
         // Redirect to signin page
         window.location.href = "/signin";
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Signup error:", error);
-      toast.error(error.message || "Failed to create account");
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to create account";
+      toast.error(errorMessage);
     }
   }
 

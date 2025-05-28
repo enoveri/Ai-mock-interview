@@ -72,23 +72,24 @@ export async function POST(request: NextRequest) {
         },
         token,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error signing in:", error);
 
-      if (
-        error.code === "auth/user-not-found" ||
-        error.code === "auth/wrong-password"
-      ) {
-        return NextResponse.json(
-          { error: "Invalid email or password" },
-          { status: 401 }
-        );
+      if (error && typeof error === "object" && "code" in error) {
+        if (
+          error.code === "auth/user-not-found" ||
+          error.code === "auth/wrong-password"
+        ) {
+          return NextResponse.json(
+            { error: "Invalid email or password" },
+            { status: 401 }
+          );
+        }
       }
 
-      return NextResponse.json(
-        { error: error.message || "Failed to sign in" },
-        { status: 500 }
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign in";
+      return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
   } catch (error) {
     console.error("Error in sign-in route:", error);

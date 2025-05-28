@@ -46,11 +46,14 @@ export const config = {
   matcher: [
     // Match the homepage
     "/",
-    // Match all protected paths (excluding homepage which is handled separately)
-    ...protectedPaths
-      .filter((path) => path !== "/")
-      .map((path) => `${path}/:path*`),
+    // Match interview paths
+    "/interview/:path*",
+    // Match profile paths
+    "/profile/:path*",
+    // Match feedback paths
+    "/feedback/:path*",
     // Match auth paths
-    ...authPaths,
+    "/signin",
+    "/signup",
   ],
 };

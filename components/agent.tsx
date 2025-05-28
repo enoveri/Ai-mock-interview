@@ -30,10 +30,10 @@ const mockTranscript = [
   },
 ];
 
-export function Agent({ interviewId }: AgentProps) {
+export function Agent({ interviewId: _ }: AgentProps) {
   const [callStatus, setCallStatus] = useState<CallStatus>("idle");
   const [isSpeaking, setIsSpeaking] = useState<"agent" | "user" | null>(null);
-  const [transcript, setTranscript] = useState(mockTranscript);
+  const [transcript] = useState(mockTranscript);
   const [currentTranscriptIndex, setCurrentTranscriptIndex] = useState(0);
 
   const handleCallAction = () => {

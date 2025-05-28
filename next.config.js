@@ -9,7 +9,7 @@ const nextConfig = {
   },
 
   // Webpack configuration for non-Turbopack builds
-  webpack: (config, { isServer }) => {
+  webpack: (config) => {
     // Add fallbacks for Node.js core modules
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -47,7 +47,9 @@ const nextConfig = {
   // Experimental features
   experimental: {
     // Enable server actions
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ["localhost:3000", "*.vercel.app"],
+    },
   },
 };
 

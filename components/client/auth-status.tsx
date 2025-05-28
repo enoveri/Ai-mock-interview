@@ -15,7 +15,7 @@ export function AuthStatus() {
       await signOut();
       toast.success("Signed out successfully");
       router.push("/signin");
-    } catch (error) {
+    } catch {
       toast.error("Failed to sign out");
     }
   };
@@ -31,7 +31,8 @@ export function AuthStatus() {
   return (
     <div className="flex items-center gap-4">
       <div className="text-sm">
-        Signed in as <span className="font-medium">{user.displayName || user.email}</span>
+        Signed in as{" "}
+        <span className="font-medium">{user.displayName || user.email}</span>
       </div>
       <Button variant="outline" size="sm" onClick={handleSignOut}>
         Sign Out

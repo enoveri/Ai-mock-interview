@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { AuthStatus } from "@/components/client/auth-status";
 import Image from "next/image";
 
 export default function NewInterviewPage() {
@@ -21,7 +20,9 @@ export default function NewInterviewPage() {
           <Image src="/logo.svg" alt="PrepWise Logo" width={64} height={64} />
         </div>
         <h1 className="text-2xl font-bold mb-2">Starting Interview...</h1>
-        <p className="text-light-100">Please wait while we prepare your interview session.</p>
+        <p className="text-light-100">
+          Please wait while we prepare your interview session.
+        </p>
       </div>
     </div>
   );
