@@ -11,11 +11,11 @@ interface AuthCheckProps {
  * Server component that checks if the user is authenticated
  * If not, redirects to the specified path
  */
-export async function AuthCheck({ 
-  children, 
-  redirectTo = "/signin" 
+export async function AuthCheck({
+  children,
+  redirectTo = "/signin",
 }: AuthCheckProps) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const sessionCookie = cookieStore.get("session");
 
   if (!sessionCookie?.value) {
@@ -25,7 +25,7 @@ export async function AuthCheck({
   try {
     // Verify the session cookie
     await auth.verifySessionCookie(sessionCookie.value);
-    
+
     // Session is valid, render children
     return <>{children}</>;
   } catch (error) {

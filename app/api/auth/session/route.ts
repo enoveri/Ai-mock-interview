@@ -24,7 +24,8 @@ export async function POST(request: NextRequest) {
     });
 
     // Set the cookie
-    cookies().set({
+    const cookieStore = await cookies();
+    cookieStore.set({
       name: "session",
       value: sessionCookie,
       maxAge: expiresIn / 1000, // Convert to seconds
@@ -57,7 +58,8 @@ export async function POST(request: NextRequest) {
 // Delete the session cookie (sign out)
 export async function DELETE() {
   try {
-    cookies().delete("session");
+    const cookieStore = await cookies();
+    cookieStore.delete("session");
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Session deletion error:", error);

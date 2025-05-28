@@ -97,9 +97,11 @@ export function useAuth(): UseAuthReturn {
       if (!response.ok) {
         throw new Error("Failed to create session");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Sign in error:", error);
-      setError(error.message || "Failed to sign in");
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign in";
+      setError(errorMessage);
       throw error;
     } finally {
       setLoading(false);
@@ -118,9 +120,11 @@ export function useAuth(): UseAuthReturn {
 
       // Sign out from Firebase
       await signOutUser();
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Sign out error:", error);
-      setError(error.message || "Failed to sign out");
+      const errorMessage =
+        error instanceof Error ? error.message : "Failed to sign out";
+      setError(errorMessage);
       throw error;
     } finally {
       setLoading(false);
