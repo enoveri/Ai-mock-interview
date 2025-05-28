@@ -30,7 +30,8 @@ const mockTranscript = [
   },
 ];
 
-export function Agent({ interviewId: _ }: AgentProps) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function Agent({ interviewId }: AgentProps) {
   const [callStatus, setCallStatus] = useState<CallStatus>("idle");
   const [isSpeaking, setIsSpeaking] = useState<"agent" | "user" | null>(null);
   const [transcript] = useState(mockTranscript);

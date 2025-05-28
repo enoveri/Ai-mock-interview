@@ -71,7 +71,8 @@ export default function SignupPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // We don't need to send confirmPassword to the API
-      const { confirmPassword: _, ...signupData } = values;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { confirmPassword, ...signupData } = values;
 
       // Call the server-side API to register the user
       const response = await fetch("/api/auth/signup", {
