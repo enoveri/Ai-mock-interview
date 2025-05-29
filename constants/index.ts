@@ -146,7 +146,6 @@ export const mappings = {
 // Inform them that the company will reach out soon with feedback.
 // End the conversation on a polite and positive note.
 
-
 // - Be sure to be professional and polite.
 // - Keep all your responses short and simple. Use official language, but be kind and welcoming.
 // - This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.`,
@@ -299,7 +298,8 @@ export const generator = {
         ],
       },
       messagePlan: {
-        firstMessage: "Hello! I'm here to help you set up a personalized AI interview. Let me gather some information about the role you'd like to practice for. What position are you preparing for?",
+        firstMessage:
+          "Hello! I'm here to help you set up a personalized AI interview. Let me gather some information about the role you'd like to practice for. What position are you preparing for?",
       },
     },
     {
@@ -319,7 +319,8 @@ export const generator = {
         temperature: 0.7,
       },
       messagePlan: {
-        firstMessage: "Perfect! I have all the information I need. Let me generate your personalized interview questions now. This will just take a moment...",
+        firstMessage:
+          "Perfect! I have all the information I need. Let me generate your personalized interview questions now. This will just take a moment...",
       },
     },
     {
@@ -401,7 +402,8 @@ export const generator = {
         temperature: 0.7,
       },
       messagePlan: {
-        firstMessage: "Excellent! Your interview has been successfully generated and saved. You can now start practicing with your personalized AI interviewer. Good luck with your preparation!",
+        firstMessage:
+          "Excellent! Your interview has been successfully generated and saved. You can now start practicing with your personalized AI interviewer. Good luck with your preparation!",
       },
     },
     {
@@ -477,10 +479,16 @@ export const generator = {
 // Interview Assistant Configuration for actual interviews
 export const createInterviewAssistant = (interviewData: any) => ({
   name: `${interviewData.role} Interview Assistant`,
-  firstMessage: `Hello! I'm your AI interviewer for the ${interviewData.role} position. I'll be conducting a ${interviewData.type} interview focusing on ${interviewData.techstack.join(', ')}. Are you ready to begin?`,
+  firstMessage: `Hello! I'm your AI interviewer for the ${
+    interviewData.role
+  } position. I'll be conducting a ${
+    interviewData.type
+  } interview focusing on ${interviewData.techstack.join(
+    ", "
+  )}. Are you ready to begin?`,
   transcriber: {
     provider: "deepgram" as const,
-    model: "nova-2", 
+    model: "nova-2",
     language: "en-US",
   },
   voice: {
@@ -498,16 +506,20 @@ export const createInterviewAssistant = (interviewData: any) => ({
     messages: [
       {
         role: "system" as const,
-        content: `You are a professional job interviewer conducting a real-time voice interview for a ${interviewData.role} position.
+        content: `You are a professional job interviewer conducting a real-time voice interview for a ${
+          interviewData.role
+        } position.
 
 Interview Details:
 - Role: ${interviewData.role}
 - Experience Level: ${interviewData.level}
 - Interview Type: ${interviewData.type}
-- Tech Stack: ${interviewData.techstack.join(', ')}
+- Tech Stack: ${interviewData.techstack.join(", ")}
 
 Questions to Ask:
-${interviewData.questions.map((q: string, i: number) => `${i + 1}. ${q}`).join('\n')}
+${interviewData.questions
+  .map((q: string, i: number) => `${i + 1}. ${q}`)
+  .join("\n")}
 
 Interview Guidelines:
 - Follow the structured question flow above

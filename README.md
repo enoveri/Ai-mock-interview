@@ -5,8 +5,9 @@ PrepWise is a cutting-edge AI interview practice platform that uses voice intera
 ## 🌟 Features
 
 ### ✅ Completed Features
+
 - **Voice-First Interview Experience**: Real-time voice interaction with AI interviewer
-- **Dual-Mode Agent System**: 
+- **Dual-Mode Agent System**:
   - Setup mode for interview configuration
   - Interview mode for actual practice sessions
 - **Dynamic Interview Generation**: AI creates personalized questions based on user preferences
@@ -17,6 +18,7 @@ PrepWise is a cutting-edge AI interview practice platform that uses voice intera
 - **Environment Validation**: Automatic configuration checking
 
 ### 🎯 Interview Types Supported
+
 - Technical interviews (role-specific)
 - Behavioral interviews
 - Mixed interview formats
@@ -26,6 +28,7 @@ PrepWise is a cutting-edge AI interview practice platform that uses voice intera
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ installed
 - Vapi.ai account with API credentials
 - Modern web browser with microphone support
@@ -33,17 +36,20 @@ PrepWise is a cutting-edge AI interview practice platform that uses voice intera
 ### Installation
 
 1. **Clone and Install**
+
    ```bash
    cd voice_agent
    npm install
    ```
 
 2. **Configure Environment**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Edit `.env.local` with your Vapi credentials:
+
    ```env
    NEXT_PUBLIC_VAPI_WEB_TOKEN=pk_your_actual_token_here
    NEXT_PUBLIC_VAPI_WORKFLOW_ID=your_workflow_id_here
@@ -51,11 +57,13 @@ PrepWise is a cutting-edge AI interview practice platform that uses voice intera
    ```
 
 3. **Get Vapi Credentials**
+
    - Sign up at [Vapi.ai](https://dashboard.vapi.ai)
    - Create a new workflow for interview setup
    - Copy your Web Token and Workflow ID
 
 4. **Start Development Server**
+
    ```bash
    npm run dev
    ```
@@ -64,6 +72,7 @@ PrepWise is a cutting-edge AI interview practice platform that uses voice intera
    Navigate to [http://localhost:3000](http://localhost:3000)
 
 ### Quick Test
+
 ```bash
 node test-setup.js
 ```
@@ -94,6 +103,7 @@ voice_agent/
 ## 🎭 How It Works
 
 ### Interview Setup Flow
+
 1. User clicks "Setup Interview"
 2. AI voice assistant guides through setup questions:
    - Target role (e.g., "Frontend Developer")
@@ -104,6 +114,7 @@ voice_agent/
 4. Setup completion triggers "Start Your Interview" button
 
 ### Interview Execution Flow
+
 1. User clicks "Start Your Interview"
 2. AI interviewer begins with role-specific questions
 3. Real-time voice interaction with live transcription
@@ -113,6 +124,7 @@ voice_agent/
 ## 🛠️ Technical Implementation
 
 ### Key Technologies
+
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Voice AI**: Vapi.ai Web SDK v2.3.1
 - **Styling**: Tailwind CSS with custom design system
@@ -122,6 +134,7 @@ voice_agent/
 ### Core Components
 
 #### Agent Component (`components/agent.tsx`)
+
 - Manages Vapi SDK integration
 - Handles dual-mode operation (setup vs interview)
 - Real-time event processing
@@ -129,18 +142,22 @@ voice_agent/
 - Keyboard shortcut support
 
 #### Interview Page (`app/interview/[id]/page.tsx`)
+
 - Dynamic routing for interview sessions
 - Mobile-responsive layout
 - Loading and error states
 - Interview metadata display
 
 #### Vapi SDK (`lib/vapi.sdk.ts`)
+
 - Environment validation
 - SDK initialization
 - Development-friendly error messages
 
 ### Environment Configuration
+
 The application requires these environment variables:
+
 - `NEXT_PUBLIC_VAPI_WEB_TOKEN`: Your Vapi web token
 - `NEXT_PUBLIC_VAPI_WORKFLOW_ID`: Interview setup workflow ID
 - `NEXT_PUBLIC_BASE_URL`: Application base URL
@@ -148,6 +165,7 @@ The application requires these environment variables:
 ## 🧪 Testing
 
 ### Manual Testing Checklist
+
 - [ ] Environment variables properly configured
 - [ ] Setup interview voice interaction works
 - [ ] Interview generation completes successfully
@@ -159,6 +177,7 @@ The application requires these environment variables:
 - [ ] Microphone permissions handling
 
 ### Automated Testing
+
 ```bash
 # Run the setup validation script
 node test-setup.js
@@ -175,25 +194,30 @@ npm run lint
 ### Common Issues
 
 **"Vapi configuration missing" Error**
+
 - Solution: Check `.env.local` file exists with correct values
 - Restart development server after environment changes
 
 **Voice Call Won't Start**
+
 - Check browser microphone permissions
 - Try different browser (Chrome recommended)
 - Verify Vapi dashboard shows active API status
 
 **Setup Doesn't Complete**
+
 - Check browser console for function call logs
 - Verify Vapi workflow is properly configured
 - Ensure assistant supports function calling
 
 **Mobile Issues**
+
 - Test on actual mobile devices
 - Check responsive design breakpoints
 - Verify touch interactions work properly
 
 ### Error Handling Features
+
 - Environment validation on startup
 - User-friendly error messages
 - Automatic retry mechanisms
@@ -203,11 +227,13 @@ npm run lint
 ## 🚧 Development Notes
 
 ### Current Implementation Status
+
 ✅ **Complete**: Core voice interaction, dual-mode agents, mobile responsiveness, error handling
 ⏳ **In Progress**: Performance optimization, advanced error tracking
 📋 **Planned**: Interview analytics, user authentication, interview history
 
 ### Architecture Decisions
+
 - **Client-side voice processing**: Using Vapi Web SDK for real-time interaction
 - **Function calling**: Setup assistant generates interview data via function calls
 - **State management**: React hooks with proper cleanup and event handling
@@ -215,6 +241,7 @@ npm run lint
 - **Mobile-first**: Responsive design with touch-friendly interactions
 
 ### Performance Considerations
+
 - Vapi SDK lazy loading
 - Event listener cleanup
 - Memory leak prevention
@@ -242,6 +269,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🆘 Support
 
 If you encounter issues:
+
 1. Check the [Setup Guide](./SETUP_GUIDE.md)
 2. Run the test script: `node test-setup.js`
 3. Check browser console for errors

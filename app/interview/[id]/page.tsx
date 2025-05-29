@@ -55,12 +55,16 @@ export default function InterviewPage() {
   }, [interviewId]);
 
   const isSetupMode = interviewId.startsWith("interview_");
-  const pageTitle = isSetupMode ? "Interview Setup" : interview ? `${interview.role} Interview` : "Interview";
-  const pageSubtitle = isSetupMode 
-    ? "Let's set up your personalized AI interview" 
-    : interview 
-      ? `${interview.type} interview • ${interview.level} level`
-      : "Loading...";
+  const pageTitle = isSetupMode
+    ? "Interview Setup"
+    : interview
+    ? `${interview.role} Interview`
+    : "Interview";
+  const pageSubtitle = isSetupMode
+    ? "Let's set up your personalized AI interview"
+    : interview
+    ? `${interview.type} interview • ${interview.level} level`
+    : "Loading...";
 
   if (loading) {
     return (
@@ -70,7 +74,9 @@ export default function InterviewPage() {
             <Image src="/logo.svg" alt="PrepWise Logo" width={64} height={64} />
           </div>
           <h1 className="text-2xl font-bold mb-2">Loading Interview...</h1>
-          <p className="text-light-100">Please wait while we prepare your session.</p>
+          <p className="text-light-100">
+            Please wait while we prepare your session.
+          </p>
         </div>
       </div>
     );
@@ -83,7 +89,9 @@ export default function InterviewPage() {
           <div className="flex justify-center mb-4">
             <Image src="/logo.svg" alt="PrepWise Logo" width={64} height={64} />
           </div>
-          <h1 className="text-2xl font-bold mb-2 text-destructive-100">Error</h1>
+          <h1 className="text-2xl font-bold mb-2 text-destructive-100">
+            Error
+          </h1>
           <p className="text-light-100">{error}</p>
         </div>
       </div>
@@ -106,7 +114,7 @@ export default function InterviewPage() {
         <div className="mb-6 sm:mb-8">
           <h1 className="text-xl sm:text-2xl font-bold mb-2">{pageTitle}</h1>
           <p className="text-light-100 text-sm sm:text-base">{pageSubtitle}</p>
-          
+
           {/* Interview Details */}
           {interview && (
             <div className="mt-4 p-3 sm:p-4 bg-dark-200 rounded-lg">
@@ -132,7 +140,7 @@ export default function InterviewPage() {
                 <span className="text-light-400 block mb-2">Tech Stack:</span>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
                   {interview.techstack.map((tech, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="px-2 py-1 bg-primary-200 text-dark-100 rounded text-xs whitespace-nowrap"
                     >
@@ -147,28 +155,33 @@ export default function InterviewPage() {
           {/* Setup Mode Instructions */}
           {isSetupMode && (
             <div className="mt-4 p-3 sm:p-4 bg-blue-gradient-dark rounded-lg border border-primary-200/20">
-              <h3 className="text-primary-200 font-semibold mb-2 text-sm sm:text-base">Interview Setup</h3>
+              <h3 className="text-primary-200 font-semibold mb-2 text-sm sm:text-base">
+                Interview Setup
+              </h3>
               <p className="text-light-100 text-sm">
-                Our AI assistant will help you create a personalized interview experience. 
-                You&apos;ll be asked about:
+                Our AI assistant will help you create a personalized interview
+                experience. You&apos;ll be asked about:
               </p>
               <ul className="mt-2 text-light-100 text-sm list-disc list-inside space-y-1 pl-2">
                 <li>The role you&apos;re preparing for</li>
                 <li>Your experience level</li>
                 <li>Technology stack you want to focus on</li>
-                <li>Interview type preference (technical, behavioral, or mixed)</li>
+                <li>
+                  Interview type preference (technical, behavioral, or mixed)
+                </li>
               </ul>
               <div className="mt-3 p-2 bg-primary-200/10 rounded text-xs text-primary-200">
-                💡 Tip: Speak clearly and take your time. You can pause between responses.
+                💡 Tip: Speak clearly and take your time. You can pause between
+                responses.
               </div>
             </div>
           )}
         </div>
 
         {/* Agent Component */}
-        <Agent 
-          interviewId={interviewId} 
-          interviewData={interview}
+        <Agent
+          interviewId={interviewId}
+          interviewData={interview ? (interview as unknown as Record<string, unknown>) : undefined}
           isSetupMode={isSetupMode}
         />
       </main>

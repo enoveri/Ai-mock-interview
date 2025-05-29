@@ -77,7 +77,8 @@ export default function TestVapi() {
           addLog(`💬 Message: ${JSON.stringify(message)}`);
         });
       } else {
-        addLog("❌ Vapi SDK not initialized");      setError("Vapi SDK not initialized");
+        addLog("❌ Vapi SDK not initialized");
+        setError("Vapi SDK not initialized");
       }
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
@@ -111,7 +112,8 @@ export default function TestVapi() {
           provider: "playht",
           voiceId: "jennifer",
         },
-      });      addLog("✅ Call started successfully");
+      });
+      addLog("✅ Call started successfully");
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       addLog(`❌ Error starting call: ${errorMessage}`);
@@ -122,7 +124,8 @@ export default function TestVapi() {
   const endCall = () => {
     try {
       vapi.stop();
-      addLog("🛑 Call stopped");    } catch (err: unknown) {
+      addLog("🛑 Call stopped");
+    } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : String(err);
       addLog(`❌ Error stopping call: ${errorMessage}`);
       setError(errorMessage);
@@ -152,20 +155,30 @@ export default function TestVapi() {
       addLog(`✅ Workflow started successfully`);
       if (result && result.id) {
         addLog(`📞 Call ID: ${result.id}`);
-      }    } catch (err: unknown) {
+      }
+    } catch (err: unknown) {
       console.error("Workflow error:", err);
       let errorMessage = "Unknown workflow error";
 
       if (err && typeof err === "object") {
         if ("message" in err && typeof err.message === "string") {
           errorMessage = err.message;
-        } else if ("response" in err && err.response && typeof err.response === "object") {
+        } else if (
+          "response" in err &&
+          err.response &&
+          typeof err.response === "object"
+        ) {
           // Handle HTTP response errors
           const response = err.response as any;
-          errorMessage = `HTTP ${response.status}: ${response.statusText}`;          if (response.data) {
+          errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+          if (response.data) {
             errorMessage += ` - ${JSON.stringify(response.data)}`;
           }
-        } else if ("toString" in err && typeof err.toString === "function" && err.toString() !== "[object Object]") {
+        } else if (
+          "toString" in err &&
+          typeof err.toString === "function" &&
+          err.toString() !== "[object Object]"
+        ) {
           errorMessage = err.toString();
         }
       } else {
@@ -204,14 +217,19 @@ export default function TestVapi() {
       addLog(`✅ Cleaned workflow started successfully`);
       if (result && result.id) {
         addLog(`📞 Call ID: ${result.id}`);
-      }    } catch (err: unknown) {
+      }
+    } catch (err: unknown) {
       console.error("Cleaned workflow error:", err);
       let errorMessage = "Unknown workflow error";
 
       if (err && typeof err === "object") {
         if ("message" in err && typeof err.message === "string") {
           errorMessage = err.message;
-        } else if ("response" in err && err.response && typeof err.response === "object") {
+        } else if (
+          "response" in err &&
+          err.response &&
+          typeof err.response === "object"
+        ) {
           const response = err.response as any;
           errorMessage = `HTTP ${response.status}: ${response.statusText}`;
           if (response.data) {
@@ -432,11 +450,16 @@ export default function TestVapi() {
               <h3 className="text-blue-800 font-semibold mb-2">
                 Testing Instructions
               </h3>
-              <ol className="text-blue-700 text-sm space-y-1 list-decimal list-inside">                <li>
-                  Check that environment variables show &quot;✅ Set&quot; in the
-                  Environment panel
+              <ol className="text-blue-700 text-sm space-y-1 list-decimal list-inside">
+                {" "}
+                <li>
+                  Check that environment variables show &quot;✅ Set&quot; in
+                  the Environment panel
                 </li>
-                <li>Click &quot;Start Test Call&quot; to initiate a voice connection</li>
+                <li>
+                  Click &quot;Start Test Call&quot; to initiate a voice
+                  connection
+                </li>
                 <li>
                   Monitor the Live Logs for any authentication or connection
                   errors
@@ -444,9 +467,10 @@ export default function TestVapi() {
                 <li>
                   If successful, you should see call events and be able to speak
                   with the AI
-                </li>                <li>
-                  Use &quot;End Call&quot; to terminate the connection when testing is
-                  complete
+                </li>{" "}
+                <li>
+                  Use &quot;End Call&quot; to terminate the connection when
+                  testing is complete
                 </li>
               </ol>
             </div>
