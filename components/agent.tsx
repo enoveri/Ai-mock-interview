@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import { createInterviewAssistant } from "@/constants";
 
 interface AgentProps {
   interviewId: string;
-  interviewData?: any;
+  interviewData?: Record<string, unknown>;
   isSetupMode: boolean;
 }
 
@@ -136,9 +136,9 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
 
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [callStatus]);
+  }, [callStatus, handleCallAction]);
 
-  const handleCallAction = async () => {
+  const handleCallAction = useCallback(async () => {
     try {
       switch (callStatus) {
         case "idle":
@@ -168,7 +168,7 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
             }
 
             const assistantConfig = createInterviewAssistant(interviewData);
-            const call = await vapi.start(assistantConfig as any);
+            const call = await vapi.start(assistantConfig as Record<string, unknown>);
             
             setCallId(call?.id || null);
           }
@@ -196,7 +196,7 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
         }
       }
     }
-  };
+  }, [callStatus, isSetupMode, user?.uid, interviewId, interviewData]);
 
   const getButtonText = () => {
     switch (callStatus) {

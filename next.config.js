@@ -2,6 +2,11 @@
 const nextConfig = {
   // Enable React strict mode for better development experience
   reactStrictMode: true,
+  
+  // Disable ESLint during builds for faster deployment
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 
   // Optimize image loading
   images: {

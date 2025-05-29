@@ -150,10 +150,10 @@ export default function InterviewPage() {
               <h3 className="text-primary-200 font-semibold mb-2 text-sm sm:text-base">Interview Setup</h3>
               <p className="text-light-100 text-sm">
                 Our AI assistant will help you create a personalized interview experience. 
-                You'll be asked about:
+                You&apos;ll be asked about:
               </p>
               <ul className="mt-2 text-light-100 text-sm list-disc list-inside space-y-1 pl-2">
-                <li>The role you're preparing for</li>
+                <li>The role you&apos;re preparing for</li>
                 <li>Your experience level</li>
                 <li>Technology stack you want to focus on</li>
                 <li>Interview type preference (technical, behavioral, or mixed)</li>

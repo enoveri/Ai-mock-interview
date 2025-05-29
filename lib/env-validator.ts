@@ -59,7 +59,7 @@ export function validateEnvironment(): ValidationResult {
 }
 
 export function getEnvironmentStatus(): 'development' | 'production' | 'test' {
-  return (process.env.NODE_ENV as any) || 'development';
+  return (process.env.NODE_ENV as 'development' | 'production' | 'test') || 'development';
 }
 
 export function isDevelopment(): boolean {
