@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { vapi } from "@/lib/vapi.sdk";
 import { useAuth } from "@/providers/auth-provider";
 import { createInterviewAssistant } from "@/constants";
+import { VapiDebug } from "@/components/vapi-debug";
 
 interface AgentProps {
   interviewId: string;
@@ -148,14 +149,32 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
               );
             }
 
-            const call = await vapi.start(workflowId, {
+            console.log("Starting workflow with ID:", workflowId);
+            console.log("Environment check:", {
+              hasToken: !!process.env.NEXT_PUBLIC_VAPI_WEB_TOKEN,
+              hasWorkflowId: !!workflowId,
+              workflowIdLength: workflowId?.length,
+              userId: user?.uid || "anonymous",
+              interviewId: interviewId,
+            });
+            
+            const callConfig = {
               variableValues: {
                 userid: user?.uid || "anonymous",
                 interviewId: interviewId,
               },
-            });
-
-            setCallId(call?.id || null);
+            };
+            
+            console.log("Call config:", callConfig);
+            
+            try {
+              const call = await vapi.start(workflowId, callConfig);
+              console.log("Workflow call result:", call);
+              setCallId(call?.id || null);
+            } catch (workflowError) {
+              console.error("Detailed workflow error:", workflowError);
+              throw workflowError;
+            }
           } else {
             // Use assistant for actual interview
             if (!interviewData) {
@@ -431,6 +450,9 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
           </div>
         </div>
       )}
+
+      {/* Debug Info */}
+      {process.env.NODE_ENV === "development" && <VapiDebug />}
 
       {/* Connection Tips */}
       {callStatus === "connecting" && (
