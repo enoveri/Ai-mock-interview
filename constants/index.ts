@@ -228,3 +228,248 @@ export const dummyInterviews: Interview[] = [
     createdAt: "2024-03-14T15:30:00Z",
   },
 ];
+
+export const generator = {
+  name: "Interview",
+  nodes: [
+    {
+      name: "start_node",
+      type: "start",
+      metadata: {
+        position: {
+          x: 5.333333333333332,
+          y: -120.5,
+        },
+      },
+    },
+    {
+      name: "conversation_1748501660424",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: -96,
+          y: 41.5,
+        },
+      },
+      prompt: "Greet the user and help them create a new Ai interviewer",
+      model: {
+        model: "gpt-4o",
+        provider: "openai",
+        maxTokens: 1000,
+        temperature: 0.7,
+      },
+      voice: {
+        voiceId: "Rohan",
+        provider: "vapi",
+      },
+      variableExtractionPlan: {
+        output: [
+          {
+            enum: ["entry", "mid", "senior"],
+            type: "string",
+            title: "level",
+            description: "The job experience level.",
+          },
+          {
+            enum: [],
+            type: "number",
+            title: "amount",
+            description: "How many questions would you like to generate?",
+          },
+          {
+            enum: [],
+            type: "string",
+            title: "techstack",
+            description:
+              "A list of technologies to cover during the job interview. For example, React, Next.js, Express.js, Node and so on…",
+          },
+          {
+            enum: [],
+            type: "string",
+            title: "role",
+            description:
+              "What role would you like to train for? For example Frontend, Backend, Fullstack, Design, UX?",
+          },
+          {
+            enum: ["behavioral", "technical", "mixed"],
+            type: "string",
+            title: "type",
+            description: "What type of the interview should it be? ",
+          },
+        ],
+      },
+      messagePlan: {
+        firstMessage: "",
+      },
+    },
+    {
+      name: "conversation_1748502666438",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: -96,
+          y: 291.5,
+        },
+      },
+      prompt: "say that the interview will be generated shortly",
+      model: {
+        model: "gpt-4o",
+        provider: "openai",
+        maxTokens: 1000,
+        temperature: 0.7,
+      },
+      messagePlan: {
+        firstMessage: "",
+      },
+    },
+    {
+      name: "API Request",
+      type: "tool",
+      metadata: {
+        position: {
+          x: -96,
+          y: 541.5,
+        },
+      },
+      tool: {
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/api/vapi/generate`,
+        body: {
+          type: "object",
+          required: ["amount", "level", "techstack", "role", "type", "userid"],
+          properties: {
+            role: {
+              type: "string",
+              value: "{{role}}",
+              description: "",
+            },
+            type: {
+              enum: ["behavioral", "techinical", "mixed"],
+              type: "string",
+              value: "{{type}}",
+              description: "",
+            },
+            level: {
+              enum: ["entry", "mid", "senior"],
+              type: "string",
+              value: "{{level}}",
+              description: "",
+            },
+            amount: {
+              type: "number",
+              value: "{{amount}}",
+              description: "",
+            },
+            userid: {
+              type: "string",
+              value: "{{userid}}",
+              description: "",
+            },
+            techstack: {
+              type: "string",
+              value: "{{techstack}}",
+              description: "",
+            },
+          },
+        },
+        type: "apiRequest",
+        method: "POST",
+        function: {
+          name: "untitled_tool",
+          parameters: {
+            type: "object",
+            required: [],
+            properties: {},
+          },
+        },
+      },
+    },
+    {
+      name: "conversation_1748503736254",
+      type: "conversation",
+      metadata: {
+        position: {
+          x: -96,
+          y: 791.5,
+        },
+      },
+      prompt:
+        "Thank the user and let them know that the interview has been generated",
+      model: {
+        model: "gpt-4o",
+        provider: "openai",
+        maxTokens: 1000,
+        temperature: 0.7,
+      },
+      messagePlan: {
+        firstMessage: "",
+      },
+    },
+    {
+      name: "hangup_1748503825256",
+      type: "tool",
+      metadata: {
+        position: {
+          x: -101.57681159420287,
+          y: 1071.9927536231883,
+        },
+      },
+      tool: {
+        type: "endCall",
+      },
+    },
+  ],
+  edges: [
+    {
+      from: "start_node",
+      to: "conversation_1748501660424",
+      condition: {
+        type: "ai",
+        prompt: "if the user said yes",
+      },
+    },
+    {
+      from: "conversation_1748501660424",
+      to: "conversation_1748502666438",
+      condition: {
+        type: "ai",
+        prompt: "If the user provided all the variables\n",
+      },
+    },
+    {
+      from: "conversation_1748502666438",
+      to: "API Request",
+      condition: {
+        type: "ai",
+        prompt: "if the user said yes",
+      },
+    },
+    {
+      from: "API Request",
+      to: "conversation_1748503736254",
+      condition: {
+        type: "ai",
+        prompt: "If the user has provided all the required information",
+      },
+    },
+    {
+      from: "conversation_1748503736254",
+      to: "hangup_1748503825256",
+      condition: {
+        type: "ai",
+        prompt: "if the user said yes",
+      },
+    },
+  ],
+  model: {
+    model: "gpt-4o",
+    messages: [
+      {
+        role: "system",
+        content:
+          "## Identity\n\nYou are a voice assistant helping with creating new AI interviewers. Your task is to collect data from the user. Remember that this is a voice conversation - do not use any special characters.",
+      },
+    ],
+    provider: "openai",
+    temperature: 0.7,
+  },
+};
