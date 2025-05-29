@@ -158,23 +158,16 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
               interviewId: interviewId,
             });
             
-            const callConfig = {
+            // Use the same pattern as test-vapi page that works
+            const result = await vapi.start(workflowId, {
               variableValues: {
                 userid: user?.uid || "anonymous",
                 interviewId: interviewId,
               },
-            };
+            });
             
-            console.log("Call config:", callConfig);
-            
-            try {
-              const call = await vapi.start(workflowId, callConfig);
-              console.log("Workflow call result:", call);
-              setCallId(call?.id || null);
-            } catch (workflowError) {
-              console.error("Detailed workflow error:", workflowError);
-              throw workflowError;
-            }
+            console.log("Workflow call result:", result);
+            setCallId(result?.id || null);
           } else {
             // Use assistant for actual interview
             if (!interviewData) {
