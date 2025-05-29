@@ -413,11 +413,11 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
             <>
               <p>Click the button above to start your interview with the AI.</p>
               <p>
-                {interviewData && 
-                 typeof interviewData === 'object' && 
-                 'questions' in interviewData && 
-                 Array.isArray(interviewData.questions) &&
-                 'role' in interviewData &&
+                {interviewData &&
+                  typeof interviewData === "object" &&
+                  "questions" in interviewData &&
+                  Array.isArray(interviewData.questions) &&
+                  "role" in interviewData &&
                   `You'll be asked ${interviewData.questions.length} questions about ${interviewData.role}.`}
               </p>
             </>

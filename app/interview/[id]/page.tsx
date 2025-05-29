@@ -181,7 +181,11 @@ export default function InterviewPage() {
         {/* Agent Component */}
         <Agent
           interviewId={interviewId}
-          interviewData={interview ? (interview as unknown as Record<string, unknown>) : undefined}
+          interviewData={
+            interview
+              ? (interview as unknown as Record<string, unknown>)
+              : undefined
+          }
           isSetupMode={isSetupMode}
         />
       </main>
