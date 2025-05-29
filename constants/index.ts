@@ -299,7 +299,7 @@ export const generator = {
         ],
       },
       messagePlan: {
-        firstMessage: "",
+        firstMessage: "Hello! I'm here to help you set up a personalized AI interview. Let me gather some information about the role you'd like to practice for. What position are you preparing for?",
       },
     },
     {
@@ -319,7 +319,7 @@ export const generator = {
         temperature: 0.7,
       },
       messagePlan: {
-        firstMessage: "",
+        firstMessage: "Perfect! I have all the information I need. Let me generate your personalized interview questions now. This will just take a moment...",
       },
     },
     {
@@ -343,7 +343,7 @@ export const generator = {
               description: "",
             },
             type: {
-              enum: ["behavioral", "techinical", "mixed"],
+              enum: ["behavioral", "technical", "mixed"],
               type: "string",
               value: "{{type}}",
               description: "",
@@ -401,7 +401,7 @@ export const generator = {
         temperature: 0.7,
       },
       messagePlan: {
-        firstMessage: "",
+        firstMessage: "Excellent! Your interview has been successfully generated and saved. You can now start practicing with your personalized AI interviewer. Good luck with your preparation!",
       },
     },
     {
@@ -473,3 +473,67 @@ export const generator = {
     temperature: 0.7,
   },
 };
+
+// Interview Assistant Configuration for actual interviews
+export const createInterviewAssistant = (interviewData: any) => ({
+  name: `${interviewData.role} Interview Assistant`,
+  firstMessage: `Hello! I'm your AI interviewer for the ${interviewData.role} position. I'll be conducting a ${interviewData.type} interview focusing on ${interviewData.techstack.join(', ')}. Are you ready to begin?`,
+  transcriber: {
+    provider: "deepgram" as const,
+    model: "nova-2", 
+    language: "en-US",
+  },
+  voice: {
+    provider: "11labs" as const,
+    voiceId: "sarah",
+    stability: 0.4,
+    similarityBoost: 0.8,
+    speed: 0.9,
+    style: 0.5,
+    useSpeakerBoost: true,
+  },
+  model: {
+    provider: "openai" as const,
+    model: "gpt-4",
+    messages: [
+      {
+        role: "system" as const,
+        content: `You are a professional job interviewer conducting a real-time voice interview for a ${interviewData.role} position.
+
+Interview Details:
+- Role: ${interviewData.role}
+- Experience Level: ${interviewData.level}
+- Interview Type: ${interviewData.type}
+- Tech Stack: ${interviewData.techstack.join(', ')}
+
+Questions to Ask:
+${interviewData.questions.map((q: string, i: number) => `${i + 1}. ${q}`).join('\n')}
+
+Interview Guidelines:
+- Follow the structured question flow above
+- Ask one question at a time and wait for a complete response
+- Listen actively and acknowledge responses before moving forward
+- Ask brief follow-up questions if a response is vague or needs clarification
+- Keep the conversation flowing smoothly while maintaining control
+- Be professional, yet warm and welcoming
+- Use official yet friendly language
+- Keep responses concise and to the point (like in a real voice interview)
+- Avoid robotic phrasing—sound natural and conversational
+
+Scoring Focus Areas:
+- Technical Knowledge (for technical questions)
+- Communication Skills
+- Problem Solving Approach
+- Cultural Fit
+- Confidence and Clarity
+
+Important:
+- This is a voice conversation, so keep your responses short and natural
+- Don't ramble for too long
+- End the interview after all questions are covered
+- Thank the candidate and let them know they'll hear back soon`,
+      },
+    ],
+    temperature: 0.7,
+  },
+});

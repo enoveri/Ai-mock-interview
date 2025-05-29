@@ -23,9 +23,7 @@ Return the questions formatted like this:
 ["Question 1", "Question 2", "Question 3"]
 
 Thank you! <3`,
-    });
-
-    const interview = {
+    });    const interview = {
       role,
       type,
       level,
@@ -36,9 +34,13 @@ Thank you! <3`,
       finalized: true,
     };
 
-    await db.collection("interviews").add(interview);
+    const docRef = await db.collection("interviews").add(interview);
 
-    return Response.json({ success: true }, { status: 200 });
+    return Response.json({ 
+      success: true, 
+      interviewId: docRef.id,
+      interview: interview
+    }, { status: 200 });
   } catch (error) {
     console.error("POST error:", error);
     return Response.json(
