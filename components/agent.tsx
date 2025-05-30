@@ -158,13 +158,17 @@ export function Agent({ interviewId, interviewData, isSetupMode }: AgentProps) {
               interviewId: interviewId,
             });
             
-            // Use the same pattern as test-vapi page that works
-            const result = await vapi.start(workflowId, {
+            // Try workflow call with proper configuration structure
+            const callConfig = {
+              workflowId: workflowId,
               variableValues: {
                 userid: user?.uid || "anonymous",
                 interviewId: interviewId,
               },
-            });
+            };
+            
+            console.log("Call config:", callConfig);
+            const result = await vapi.start(callConfig);
             
             console.log("Workflow call result:", result);
             setCallId(result?.id || null);
